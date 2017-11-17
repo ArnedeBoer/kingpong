@@ -1,0 +1,46 @@
+{
+  "name": "kingpong",
+  "version": "1.0.0",
+  "description": "Group Project NYCDA",
+  "main": "app.js",
+  "scripts": {
+    "start-js": "react-scripts start",
+    "build-css": "node-sass-chokidar src/styles/sass/ -o src/styles/css/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/styles/sass/ -o src/styles/css/ --watch --recursive",
+    "start": "npm-run-all -p watch-css start-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArnedeBoer/kingpong.git"
+  },
+  "keywords": [
+    "kingpong ping pong"
+  ],
+  "author": [
+    "Arne de Boer",
+    "Vincent Kesumo"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArnedeBoer/kingpong/issues"
+  },
+  "homepage": "https://github.com/ArnedeBoer/kingpong#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.1",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "react": "15.3.2",
+    "react-dom": "15.3.2",
+    "react-router": "4.0.0-alpha.4",
+    "sequelize": "^4.22.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "react-scripts": "0.6.1"
+  },
+  "proxy": "http://localhost:8080"
+}
