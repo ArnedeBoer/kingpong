@@ -15,12 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (models) => {
         User.hasMany(models.Matches, {
             foreignKey: 'playerOne',
-            as: 'matches'
+            as: 'playerOneMatches'
         });
 
         User.hasMany(models.Matches, {
             foreignKey: 'playerTwo',
-            as: 'matches'
+            as: 'playerTwoMatches'
         });
     };
 

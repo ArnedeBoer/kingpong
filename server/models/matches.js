@@ -7,15 +7,31 @@ module.exports = (sequelize, DataTypes) => {
         scoreTwo: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        playerOne: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        playerTwo: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     }, {
         timestamps: false
     });
 
     Matches.associate = (models) => {
-        Matches.hasMany(Following);
-        Following.belongsTo(models.User, { as: 'playerOne', foreignKey: 'playerOne'});
-        Following.belongsTo(models.User, { as: 'playerTwo', foreignKey: 'playerTwo'});
+        Matches.belongsTo(models.User, {
+            foreignKey: 'playerOne',
+            as: 'playerOneMatches',
+            onDelete: 'CASCADE'
+        });
+
+        Matches.belongsTo(models.User, {
+            foreignKey: 'playerTwo',
+            as: 'playerTwoMatches',
+            onDelete: 'CASCADE'
+        });
     };
 
     return Matches;
