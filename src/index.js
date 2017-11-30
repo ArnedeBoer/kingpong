@@ -1,23 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Match, Miss } from 'react-router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './styles/css/style.css';
-import Menu from './components/Menu';
 import Main from './components/Main';
-import Profile from './components/Profile';
-import NotFound from './components/NotFound';
+import Login from './components/Login';
+import Register from './components/Register';
 
 const Root = () => {
     return (
-        <BrowserRouter>
-            <div>
-                <Menu />
-                <Match exactly pattern="/" component={Main} />
-                <Match exactly pattern="/profile" component={Profile} />
-                <Miss component={NotFound} />
-            </div>
-        </BrowserRouter>
+        <Router>
+            <Switch>
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <Route path="/" component={Main} />
+            </Switch>
+        </Router>
     )
 }
 

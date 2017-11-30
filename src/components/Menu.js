@@ -5,7 +5,8 @@ class Menu extends React.Component {
         return (
             <div id="menu">
                 <ul>
-                    <li><a href="/">Create match</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/new">Create match</a></li>
                     <li><a href="/profile">Profile</a></li>
                     <li><a href="/login">Logout</a></li>
                 </ul>
