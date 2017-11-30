@@ -11,5 +11,10 @@ module.exports = {
             })
             .then(match => res.status(201).send(match))
             .catch(error => res.status(400).send(error));
+    },
+    list(req, res) {
+        return Matches
+            .findAll()
+            .then(matches => res.status(200).send(matches));
     }
 };
