@@ -2,19 +2,18 @@ module.exports = (sequelize, DataTypes) => {
     const Matches = sequelize.define('Matches', {
         scoreOne: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            defaultValue: 0
         },
         scoreTwo: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            defaultValue: 0
         },
-        playerOne: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        playerTwo: {
-            type: DataTypes.INTEGER,
-            allowNull: false
+        confirmed: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     }, {
         timestamps: false

@@ -22,15 +22,15 @@ module.exports = {
                 }
             })
             .then(user => {
-                if (user) {
-                    bcrypt.compare(req.body.password, user.password, (err,res) =>
-                        res ? res.status(200).send(users) : res.status(401).send({ message: 'Invalid Password' }))
-                } else {
-                    res.status(401).send({ message: 'Username not found' })
+                if (!user) {
+                    return res.status(401).send({ message: 'Username not found' })
                 }
+                // Unsure if it can return bcrypt.compare
+                bcrypt.compare(req.body.password, user.password, (err,res) =>
+                    res ? res.status(200).send(users) : res.status(401).send({ message: 'Invalid Password' }))
             })
             .catch(error => res.status(400).send(error));
-    }
+    },
     list(req, res) {
         return User
             .findAll()
@@ -66,5 +66,24 @@ module.exports = {
                 return res.status(200).send(user);
             })
             .catch(error => res.status(400).send(error));
+    },
+    changeCredentials(req,res) {
+        return User
+            .findOne({
+                where: {
+                    id: req.session.user.id
+                }
+            })
+            .then(user => {
+                if(!user){
+                    return res.status(400).send({ message: 'You must be logged in' });
+                }
+                return user.update({
+                        username: checkStringLength(req.body.username, requiredLength) && checkNameUse(req.body.username) ? req.body.username : undefined,
+                        password: checkStringLength(req.body.password, requiredLength) ? bcrypt.hashSync(req.body.password, 9) : undefined
+                    })
+                    .then(user => res.status(201).send(user))
+                    .catch(error => res.status(400).send(error));
+            })
     }
 };
