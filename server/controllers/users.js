@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt');
 const User = require('../models').User;
 const requiredLength = 8;
 const checkStringLength = (input, len) => input.length === 0 || input.length >= len;
-const checkNameUse = (input) => User.findOne({ where:{ username: input } }).then(user => user ? true : false )
+const checkNameUse = (input) => User.findOne({ where:{ username: input } }).then(user => {
+    return user;
+});
 
 module.exports = {
     create(req, res) {
@@ -14,7 +16,7 @@ module.exports = {
             .then(user => res.status(201).send(user))
             .catch(error => res.status(400).send(error));
     },
-    login(req,res) {
+    login(req, res) {
         return User
             .findOne({
                 where:{

@@ -1,0 +1,21 @@
+#register, #login {
+    width: 240px;
+    margin: auto;
+}
+
+#register-form, #login-form {
+    margin-top: 250px;
+}
+
+label {
+    display: block;
+}
+
+input, .tooltip {
+    display: inline-block;
+}
+
+input {
+    width: 200px;
+    margin-bottom: 10px;
+}

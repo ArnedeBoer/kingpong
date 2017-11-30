@@ -3,7 +3,7 @@ import React from 'react';
 class New extends React.Component {
     render() {
         return (
-            <div id="New">
+            <div id="new">
                 new
             </div>
         )
