@@ -42,9 +42,10 @@ class Register extends React.Component {
                 "Content-Type": "application/json"
             }
         })
-        .then(res => res.json())
-        .then(results => {
-            console.log(results);
+        .then(res => {
+            if(res.status === 201) {
+                window.location.replace('/login');
+            }
         });
     };
 

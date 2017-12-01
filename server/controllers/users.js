@@ -24,12 +24,11 @@ module.exports = {
                 }
             })
             .then(user => {
-                if (!user) {
-                    return res.status(401).send({ message: 'Username not found' })
+                if (user !== '' && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
+                    return res.status(200).send(user);
                 }
-                // Unsure if it can return bcrypt.compare
-                bcrypt.compare(req.body.password, user.password, (err,res) =>
-                    res ? res.status(200).send(users) : res.status(401).send({ message: 'Invalid Password' }))
+                
+                return res.status(400).send('Success');
             })
             .catch(error => res.status(400).send(error));
     },

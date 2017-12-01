@@ -10,8 +10,11 @@ class Login extends React.Component {
         this.updateState = this.updateState.bind(this);
 
         this.state = {
+            username: '',
+            password: '',
             usernameValid: false,
-            passwordValid: false
+            passwordValid: false,
+            error: false
         };
     }
 
@@ -38,15 +41,20 @@ class Login extends React.Component {
                 "Content-Type": "application/json"
             }
         })
-        .then(res => res.json())
-        .then(results => {
-            console.log(results);
+        .then(res => {
+            if(res.status === 200) {
+                window.location.replace('/');
+            }
+
+            if(res.status === 400) {
+                this.setState({error: true});
+            }
         });
     };
 
     render () {
-        const { username, password } = this.state;
-        const formValid = !(username && password);
+        const { usernameValid, passwordValid } = this.state;
+        const formValid = !(usernameValid && passwordValid);
 
         return (
             <div id="login">
@@ -56,6 +64,7 @@ class Login extends React.Component {
                     <Input name="password" title="Password" updateState={this.updateState}/>                  
                     <button type="submit" disabled={formValid}>Submit</button>
                 </form>
+                { this.state.error ? <div className="error">The username or password is not correct.</div> : null }
                 <Link to='/register'>Or register</Link>
             </div>
         )

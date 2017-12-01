@@ -17,7 +17,7 @@ module.exports = {
             .findAll()
             .then(matches => res.status(200).send(matches));
     },
-    delete(req,res) {
+    delete(req, res) {
         return Matches
             .destory({
                 where: {
@@ -27,40 +27,40 @@ module.exports = {
             .then(() => res.status(200).send({ message: 'Success' }))
             .catch(error => res.status(400).send(error));
     },
-    editScore(req,res) {
+    editScore(req, res) {
         return Matches
             .findOne({
                 where: {
-                    playerOne: req.session.user.id;
-                    id: req. // Unsure where the match's id will be stored
+                    playerOne: req.session.user.id,
+                    id: req.session.user.id // Unsure where the match's id will be stored
                 }
             })
             .then(match => {
-                if(match){
+                if (match) {
                     return match.update({
                             scoreOne: req.body.scoreOne,
                             scoreTwo: req.body.scoreTwo
                         })
-                        .then(match => res.status(201).send(match));
+                        .then(updatedMatch => res.status(201).send(updatedMatch));
                 }
 
                 return res.status(403).send({ message: 'User not permitted' });
             })
             .catch(error => res.status(400).send(error));
     },
-    confirmScore(req,res) {
+    confirmScore(req, res) {
         return Matches
             .findOne({
                 where: {
                     playerTwo: req.session.user.id,
-                    id: req. // Unsure where the match's id will be stored
+                    id: req.session.user.id // Unsure where the match's id will be stored
                 }
             })
             .then(match => {
                 match.update({
-                    confirmed: TRUE
+                    confirmed: true
                 })
-                .then(match => res.status(200).send(match));
+                .then(updatedMatch => res.status(200).send(updatedMatch));
             })
             .catch(error => res.status(403).send(error));
     }
