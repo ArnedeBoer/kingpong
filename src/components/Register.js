@@ -44,7 +44,7 @@ class Register extends React.Component {
         })
         .then(res => {
             if(res.status === 201) {
-                window.location.replace('/login');
+                window.location.replace('/profile');
             }
         });
     };
@@ -59,7 +59,7 @@ class Register extends React.Component {
                 <form id="register-form" onSubmit={(e) => this.handleSubmit(e)}>
                     <Input name="username" title="Username" updateState={this.updateState}/>
                     <Input name="password" title="Password" updateState={this.updateState}/>
-                    <Input name="passwordConfirm" title="Confirm password" updateState={this.updateState}/>                    
+                    <Input name="passwordConfirm" title="Confirm password" updateState={this.updateState}/>
                     <button type="submit" disabled={formValid}>Submit</button>
                 </form>
                 <Link to='/login'>Or login</Link>

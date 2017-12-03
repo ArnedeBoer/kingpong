@@ -13,14 +13,20 @@ const Root = () => {
             <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/logout" render={ props => {
+                        sessionStorage.clear();
+                        window.location.replace('/login');
+                    }
+                } />
                 <Route path="/" render={ props => {
                         if(sessionStorage.getItem("userID") !== null) {
                             return <Main />
                         }
-                        
+
                         window.location.replace('/login');
                     }
                 } />
+
             </Switch>
         </Router>
     )
