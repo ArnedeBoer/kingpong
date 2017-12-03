@@ -29,7 +29,7 @@ class Profile extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log("hello");
+        
         const fields = {
             username: this.state.username,
         }

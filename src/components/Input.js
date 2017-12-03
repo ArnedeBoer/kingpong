@@ -15,6 +15,7 @@ class New extends React.Component {
         const value = e.target.value;
         const lengthValid = value.length >= 8;
         const fieldStatusName = `${[e.target.name]}Valid`;
+        const numberValid = typeof Number(value) === 'number' && value >= 0;
         let passwordValid = true;
         let error = false;
 
@@ -22,7 +23,9 @@ class New extends React.Component {
             passwordValid = e.target.value === document.getElementById('password').value;
         }
 
-        error = !(lengthValid && passwordValid);
+        const checks = this.props.type === 'text' ? lengthValid && passwordValid : numberValid;
+
+        error = !(checks);
 
         this.setState({ error })
 
@@ -33,7 +36,7 @@ class New extends React.Component {
     }
 
     render() {
-        const { name, title } = this.props;
+        const { name, title, type } = this.props;
         const nameLc = name.toLowerCase();
         const tooltipText = nameLc === 'passwordConfirm' ? 'The passwords do not match.' : `The ${nameLc} must be at least 8 characters long`;
         const value = this.props.value;
@@ -42,7 +45,7 @@ class New extends React.Component {
             <div className="input">
                 <label>{title}:</label>
                 <input
-                    type="text"
+                    type={type}
                     id={name}
                     name={name}
                     placeholder={title}

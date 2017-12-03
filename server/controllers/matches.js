@@ -4,10 +4,10 @@ module.exports = {
     create(req, res) {
         return Matches
             .create({
+                playerOne: req.body.playerOne,
+                playerTwo: req.body.playerTwo,
                 scoreOne: req.body.scoreOne,
-                scoreTwo: req.body.scoreTwo,
-                playerOne: req.session.user.id,
-                playerTwo: req.body.playerTwo
+                scoreTwo: req.body.scoreTwo
             })
             .then(match => res.status(201).send(match))
             .catch(error => res.status(400).send(error));

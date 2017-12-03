@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 class Login extends React.Component {
     constructor(props) {
         super();
-
-        this.handleChange = this.handleChange.bind(this);
+        
         this.updateState = this.updateState.bind(this);
 
         this.state = {
@@ -20,10 +19,6 @@ class Login extends React.Component {
 
     updateState(data) {
         this.setState(data);
-    }
-
-    handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
     }
 
     handleSubmit(e) {
@@ -65,9 +60,22 @@ class Login extends React.Component {
             <div id="login">
                 <h2>Log in:</h2>
                 <form id="login-form" onSubmit={(e) => this.handleSubmit(e)}>
-                    <Input name="username" title="Username" updateState={this.updateState}/>
-                    <Input name="password" title="Password" updateState={this.updateState}/>
-                    <button type="submit" disabled={formValid}>Submit</button>
+                    <Input
+                        type="text"
+                        name="username"
+                        title="Username"
+                        updateState={this.updateState}
+                    />
+                    <Input
+                        type="text"
+                        name="password"
+                        title="Password"
+                        updateState={this.updateState}
+                    />
+                    <button
+                        type="submit"
+                        disabled={formValid}
+                    >Submit</button>
                 </form>
                 { this.state.error ? <div className="error">The username or password is not correct.</div> : null }
                 <Link to='/register'>Or register</Link>

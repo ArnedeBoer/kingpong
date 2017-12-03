@@ -57,10 +57,28 @@ class Register extends React.Component {
             <div id="register">
                 <h2>Register:</h2>
                 <form id="register-form" onSubmit={(e) => this.handleSubmit(e)}>
-                    <Input name="username" title="Username" updateState={this.updateState}/>
-                    <Input name="password" title="Password" updateState={this.updateState}/>
-                    <Input name="passwordConfirm" title="Confirm password" updateState={this.updateState}/>                    
-                    <button type="submit" disabled={formValid}>Submit</button>
+                    <Input
+                        type="text"
+                        name="username"
+                        title="Username"
+                        updateState={this.updateState}
+                    />
+                    <Input
+                        type="text"
+                        name="password"
+                        title="Password"
+                        updateState={this.updateState}
+                    />
+                    <Input
+                        type="text"
+                        name="passwordConfirm"
+                        title="Confirm password"
+                        updateState={this.updateState}
+                    />                    
+                    <button
+                        type="submit"
+                        disabled={formValid}
+                    >Submit</button>
                 </form>
                 <Link to='/login'>Or login</Link>
             </div>

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models').User;
+const Op = require('sequelize').Op;
 const requiredLength = 8;
 const checkStringLength = (input, len) => input.length === 0 || input.length >= len;
 const checkNameUse = (input) => User.findOne({ where:{ username: input } }).then(user => {
@@ -68,8 +69,22 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
-    edit(req,res) {
-        console.log(req.params.id);
+    filterByUsername(req, res) {
+        return User
+            .findAll({
+                where: {
+                    username: {
+                        [Op.eq]: req.params.username
+                    }
+                },
+                order: [
+                    ['username']
+                ]
+            })
+            .then(people => res.status(200).send(people))
+            .catch(error => res.status(400).send(error));
+    },
+    edit(req, res) {
         return User
             .findOne({
                 where: {
@@ -77,7 +92,7 @@ module.exports = {
                 }
             })
             .then(user => {
-                if(!user){
+                if (!user){
                     return res.status(400).send({ message: 'You must be logged in' });
                 }
                 return user.update({
@@ -86,6 +101,6 @@ module.exports = {
                     })
                     .then(user => res.status(201).send(user.dataValues))
                     .catch(error => res.status(400).send(error));
-            })
+            });
     }
 };
