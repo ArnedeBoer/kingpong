@@ -10,7 +10,7 @@ class New extends React.Component {
             error: false
         };
     }
-    
+
     handleChange(e) {
         const value = e.target.value;
         const lengthValid = value.length >= 8;
@@ -36,6 +36,7 @@ class New extends React.Component {
         const { name, title } = this.props;
         const nameLc = name.toLowerCase();
         const tooltipText = nameLc === 'passwordConfirm' ? 'The passwords do not match.' : `The ${nameLc} must be at least 8 characters long`;
+        const value = this.props.value;
 
         return (
             <div className="input">
@@ -47,6 +48,7 @@ class New extends React.Component {
                     placeholder={title}
                     autoComplete='off'
                     onChange={this.handleChange}
+                    value={value}
                     required
                 />
                 <div className="tooltip" hidden={true}>
