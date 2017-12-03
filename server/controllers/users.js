@@ -32,6 +32,10 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
+    logout(req,res) {
+        sessionStorage.clear();
+        res.redirect('/');
+    }
     list(req, res) {
         return User
             .findAll()

@@ -55,9 +55,7 @@ class Profile extends React.Component {
         .then(res => {
             if(res.status === 200) {
                 return res.json();
-            }
-
-            if(res.status === 400) {
+            } else {
                 window.location.replace('/');
             }
         })
