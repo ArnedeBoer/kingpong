@@ -44,7 +44,7 @@ class Register extends React.Component {
         })
         .then(res => {
             if(res.status === 201) {
-                window.location.replace('/login');
+                window.location.replace('/profile');
             }
         });
     };

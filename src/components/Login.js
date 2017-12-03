@@ -47,7 +47,7 @@ class Login extends React.Component {
         })
         .then(res => {
             sessionStorage.setItem('userID', res.id);
-            window.location.replace('/profile');
+            window.location.replace('/');
 
         })
     };
