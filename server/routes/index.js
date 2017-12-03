@@ -11,4 +11,7 @@ module.exports = app => {
     app.post('/api/user/create', usersController.create);
 
     app.post('/api/match/create/', matchesController.create);
+    app.get('/api/match/list/', matchesController.list);
+    app.post('/api/match/listmine/', matchesController.listMine);
+    app.post('/api/match/confirm/', matchesController.confirm);
 };

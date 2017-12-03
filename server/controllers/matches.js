@@ -1,4 +1,5 @@
 const Matches = require('../models').Matches;
+const Op = require('sequelize').Op;
 
 module.exports = {
     create(req, res) {
@@ -14,7 +15,26 @@ module.exports = {
     },
     list(req, res) {
         return Matches
-            .findAll()
+            .findAll({
+                order: [
+                    ['id', 'DESC']
+                ]
+            })
+            .then(matches => res.status(200).send(matches));
+    },
+    listMine(req, res) {
+        return Matches
+            .findAll({
+                where: {
+                    [Op.or]: {
+                        playerOne: req.body.id,
+                        playerTwo: req.body.id
+                    }
+                },
+                order: [
+                    ['id', 'DESC']
+                ]
+            })
             .then(matches => res.status(200).send(matches));
     },
     delete(req, res) {
@@ -48,14 +68,9 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
-    confirmScore(req, res) {
+    confirm(req, res) {
         return Matches
-            .findOne({
-                where: {
-                    playerTwo: req.session.user.id,
-                    id: req.session.user.id // Unsure where the match's id will be stored
-                }
-            })
+            .findById(req.body.id)
             .then(match => {
                 match.update({
                     confirmed: true

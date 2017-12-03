@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from './Input';
 import Button from './Button';
+import Match from './Match';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -8,15 +9,18 @@ class Profile extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.updateState = this.updateState.bind(this);
+        this.updateMatch = this.updateMatch.bind(this);
 
         this.state = {
             username: '',
             usernameValid: true,
             button: false,
-            error: false
+            error: false,
+            matches: []
         };
 
         this.profileLoad();
+        this.matchesLoad();
     }
 
     updateState(data) {
@@ -25,6 +29,26 @@ class Profile extends React.Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    updateMatch(id) {
+        const matches = this.state.matches;
+        const foundIndex = matches.findIndex(x => x.id === id);
+        
+        fetch('/api/match/confirm/', {
+            method: "POST",
+            body: JSON.stringify({id}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(updatedMatch => {
+            matches[foundIndex] = updatedMatch;
+            matches[foundIndex].id = Math.random(); //read up on immutables
+
+            this.setState({matches: matches});
+        })        
     }
 
     handleSubmit(e) {
@@ -64,8 +88,22 @@ class Profile extends React.Component {
         }))
     }
 
+    matchesLoad() {
+        fetch("/api/match/listmine/", {
+            method: "POST",
+            body: JSON.stringify({id: sessionStorage.getItem('userID')}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(matches => {
+            this.setState({matches});
+        });
+    }
+
     render () {
-        const { username }= this.state;
+        const { username } = this.state;
         const formValid = !(this.state.usernameValid);
 
         return (
@@ -78,6 +116,26 @@ class Profile extends React.Component {
                     }
                     <Button buttonType={this.state.button} onClick={this.handleEdit} valid={formValid} updateState={this.updateState}/>
                 </form>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Player One</th>
+                        <th>Player Two</th>
+                        <th>Score One</th>
+                        <th>Score Two</th>
+                        <th>Confirmed</th>
+                    </tr>
+                    {
+                        this.state.matches.map(match => {
+                            return <Match
+                                key={match.id}
+                                match={match}
+                                updateMatch={this.updateMatch}
+                            />
+                        })
+                    }
+                    </tbody>
+                </table>
             </div>
         )
     }
