@@ -43,13 +43,18 @@ class Login extends React.Component {
         })
         .then(res => {
             if(res.status === 200) {
-                window.location.replace('/');
+                return res = res.json();
             }
 
             if(res.status === 400) {
                 this.setState({error: true});
             }
-        });
+        })
+        .then(res => {
+            sessionStorage.setItem('userID', res.id);
+            window.location.replace('/profile');
+
+        })
     };
 
     render () {
@@ -61,7 +66,7 @@ class Login extends React.Component {
                 <h2>Log in:</h2>
                 <form id="login-form" onSubmit={(e) => this.handleSubmit(e)}>
                     <Input name="username" title="Username" updateState={this.updateState}/>
-                    <Input name="password" title="Password" updateState={this.updateState}/>                  
+                    <Input name="password" title="Password" updateState={this.updateState}/>
                     <button type="submit" disabled={formValid}>Submit</button>
                 </form>
                 { this.state.error ? <div className="error">The username or password is not correct.</div> : null }
