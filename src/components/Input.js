@@ -23,7 +23,7 @@ class New extends React.Component {
             passwordValid = e.target.value === document.getElementById('password').value;
         }
 
-        const checks = this.props.type === 'text' ? lengthValid && passwordValid : numberValid;
+        const checks = this.props.type === 'number' ? numberValid : lengthValid && passwordValid;
 
         error = !(checks);
 

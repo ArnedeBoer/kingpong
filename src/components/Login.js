@@ -67,7 +67,7 @@ class Login extends React.Component {
                         updateState={this.updateState}
                     />
                     <Input
-                        type="text"
+                        type="password"
                         name="password"
                         title="Password"
                         updateState={this.updateState}

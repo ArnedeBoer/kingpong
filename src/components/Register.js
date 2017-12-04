@@ -64,13 +64,13 @@ class Register extends React.Component {
                         updateState={this.updateState}
                     />
                     <Input
-                        type="text"
+                        type="password"
                         name="password"
                         title="Password"
                         updateState={this.updateState}
                     />
                     <Input
-                        type="text"
+                        type="password"
                         name="passwordConfirm"
                         title="Confirm password"
                         updateState={this.updateState}
