@@ -26,7 +26,7 @@ class Match extends React.Component {
         const matchID = playerTwo !== Number(sessionStorage.getItem('userID'));
 
         return (
-            <tr className="match">
+            <tr className={this.props.index % 2 ? 'match light' : 'match'}>
                 <td>{playerOne}</td>
                 <td>{playerTwo}</td>
                 <td>{scoreOne}</td>

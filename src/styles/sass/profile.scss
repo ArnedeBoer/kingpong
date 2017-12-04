@@ -1,0 +1,21 @@
+#profile > * {
+    margin: auto;
+}
+
+#profile {
+    h2, form, #info {
+        width: 240px;
+    }
+
+    form, #info {
+        margin-bottom: 50px;
+    }
+
+    span {
+        display: block;
+    }
+
+    .edit, .save {
+        margin-top: 20px;
+    }
+}
