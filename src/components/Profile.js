@@ -1,6 +1,5 @@
 import React from 'react';
 import Input from './Input';
-import Button from './Button';
 import Match from './Match';
 
 class Profile extends React.Component {
@@ -111,6 +110,7 @@ class Profile extends React.Component {
     }
 
     renderForm() {
+        const formValid = !(this.state.usernameValid && this.state.passwordValid);
         const { username } = this.state;
 
         return (
@@ -128,13 +128,13 @@ class Profile extends React.Component {
                     title="Password"
                     updateState={this.updateState}
                 />
-                <button className="save" onClick={this.save}>Save</button>
+                <button className="save" disabled={formValid} onClick={this.save}>Save</button>
             </form>
         )
     }
 
     renderNormal() {
-        const { username, password } = this.state;
+        const { username } = this.state;
 
         return (
             <div id="info">
@@ -145,8 +145,6 @@ class Profile extends React.Component {
     }
 
     render () {
-        const formValid = !(this.state.usernameValid);
-
         return (
             <div id="profile">
                 <h2>My Profile</h2>
