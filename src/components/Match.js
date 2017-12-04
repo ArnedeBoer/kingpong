@@ -6,11 +6,11 @@ class Match extends React.Component {
 
         this.updateMatch = this.updateMatch.bind(this);
 
-        const { playerOne, playerTwo, scoreOne, scoreTwo, confirmed } = props.match;
+        const { playerOneMatches, playerTwoMatches, scoreOne, scoreTwo, confirmed } = props.match;
 
         this.state = {
-            playerOne: playerOne,
-            playerTwo: playerTwo,
+            playerOne: playerOneMatches,
+            playerTwo: playerTwoMatches,
             scoreOne: scoreOne,
             scoreTwo: scoreTwo,
             confirmed: confirmed
@@ -23,12 +23,12 @@ class Match extends React.Component {
 
     render() {
         const { playerOne, playerTwo, scoreOne, scoreTwo, confirmed } = this.state;
-        const matchID = playerTwo !== Number(sessionStorage.getItem('userID'));
+        const matchID = playerTwo.id !== Number(sessionStorage.getItem('userID'));
 
         return (
             <tr className={this.props.index % 2 ? 'match light' : 'match'}>
-                <td>{playerOne}</td>
-                <td>{playerTwo}</td>
+                <td>{playerOne.username}</td>
+                <td>{playerTwo.username}</td>
                 <td>{scoreOne}</td>
                 <td>{scoreTwo}</td>
                 <td>{ confirmed || matchID ? null : <button onClick={this.updateMatch}>Confirm</button> }</td>

@@ -1,4 +1,5 @@
 const Matches = require('../models').Matches;
+const Users = require('../models').Users;
 const Op = require('sequelize').Op;
 
 module.exports = {
@@ -33,7 +34,8 @@ module.exports = {
                 },
                 order: [
                     ['id', 'DESC']
-                ]
+                ],
+                include: ['playerOneMatches', 'playerTwoMatches']
             })
             .then(matches => res.status(200).send(matches));
     },
