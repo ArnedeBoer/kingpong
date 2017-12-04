@@ -10,11 +10,14 @@ class Profile extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateState = this.updateState.bind(this);
         this.updateMatch = this.updateMatch.bind(this);
+        this.edit = this.edit.bind(this);
 
         this.state = {
             username: '',
+            password: '',
             usernameValid: true,
-            button: false,
+            passwordValid: false,
+            edit: false,
             error: false,
             matches: []
         };
@@ -56,9 +59,10 @@ class Profile extends React.Component {
         
         const fields = {
             username: this.state.username,
+            password: this.state.password
         }
 
-        fetch('/api/user/edit/' + sessionStorage.getItem("userID"), {
+        fetch(`/api/user/edit/${sessionStorage.getItem('userID')}`, {
             method: "POST",
             body: JSON.stringify(fields),
             headers: {
@@ -67,7 +71,7 @@ class Profile extends React.Component {
         })
         .then(res => {
             if(res.status === 201) {
-                window.location.replace('/profile');
+                this.setState({edit: false});
             }
         });
     }
@@ -102,20 +106,51 @@ class Profile extends React.Component {
         });
     }
 
-    render () {
+    edit() {
+        this.setState({edit: true})
+    }
+
+    renderForm() {
         const { username } = this.state;
+
+        return (
+            <form id="login-form" onSubmit={(e) => this.handleSubmit(e)}>
+                <Input
+                    type="text"
+                    name="username"
+                    title="Username"
+                    value={username}
+                    updateState={this.updateState}
+                />
+                <Input
+                    type="password"
+                    name="password"
+                    title="Password"
+                    updateState={this.updateState}
+                />
+                <button className="save" onClick={this.save}>Save</button>
+            </form>
+        )
+    }
+
+    renderNormal() {
+        const { username, password } = this.state;
+
+        return (
+            <div id="info">
+                <span>Username: {username}</span>
+                <button className="edit" onClick={this.edit}>Edit</button>
+            </div>
+        )
+    }
+
+    render () {
         const formValid = !(this.state.usernameValid);
 
         return (
             <div id="profile">
                 <h2>My Profile</h2>
-                <form id="login-form" onSubmit={(e) => this.handleSubmit(e)}>
-                    { this.state.button
-                        ? <Input name="username" title="Username" value={username} updateState={this.updateState}/>
-                        : <h3>{username}</h3>
-                    }
-                    <Button buttonType={this.state.button} onClick={this.handleEdit} valid={formValid} updateState={this.updateState}/>
-                </form>
+                { this.state.edit ? this.renderForm() : this.renderNormal() }
                 <table>
                     <tbody>
                     <tr>
@@ -126,10 +161,11 @@ class Profile extends React.Component {
                         <th>Confirmed</th>
                     </tr>
                     {
-                        this.state.matches.map(match => {
+                        this.state.matches.map((match, index) => {
                             return <Match
                                 key={match.id}
                                 match={match}
+                                index={index}
                                 updateMatch={this.updateMatch}
                             />
                         })

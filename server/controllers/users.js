@@ -97,9 +97,9 @@ module.exports = {
                 }
                 return user.update({
                         username: checkStringLength(req.body.username, requiredLength) && checkNameUse(req.body.username) ? req.body.username : undefined,
-                        // password: checkStringLength(req.body.password, requiredLength) ? bcrypt.hashSync(req.body.password, 9) : undefined
+                        password: checkStringLength(req.body.password, requiredLength) ? bcrypt.hashSync(req.body.password, 9) : undefined
                     })
-                    .then(user => res.status(201).send(user.dataValues))
+                    .then(editedUser => res.status(201).send(editedUser.dataValues))
                     .catch(error => res.status(400).send(error));
             });
     }
