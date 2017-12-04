@@ -15,7 +15,8 @@ class Register extends React.Component {
             passwordConfirm: '',
             usernameValid: false,
             passwordValid: false,
-            passwordConfirmValid: false
+            passwordConfirmValid: false,
+            error: false
         };
     }
 
@@ -44,7 +45,10 @@ class Register extends React.Component {
         })
         .then(res => {
             if(res.status === 201) {
+                sessionStorage.setItem("userID", res.Id);
                 window.location.replace('/profile');
+            } else if (res.status === 400){
+                this.setState({error: true});
             }
         });
     };
@@ -52,6 +56,7 @@ class Register extends React.Component {
     render () {
         const { usernameValid, passwordValid, passwordConfirmValid } = this.state;
         const formValid = !(usernameValid && passwordValid && passwordConfirmValid);
+        const errorMsg = "Username is already used!";
 
         return (
             <div id="register">
@@ -74,11 +79,13 @@ class Register extends React.Component {
                         name="passwordConfirm"
                         title="Confirm password"
                         updateState={this.updateState}
-                    />                    
+                    />
                     <button
                         type="submit"
                         disabled={formValid}
                     >Submit</button>
+                    <br/>
+                    {this.state.error ? errorMsg : null}
                 </form>
                 <Link to='/login'>Or login</Link>
             </div>

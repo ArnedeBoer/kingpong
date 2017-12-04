@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class Login extends React.Component {
     constructor(props) {
         super();
-        
+
         this.updateState = this.updateState.bind(this);
 
         this.state = {
@@ -13,7 +13,7 @@ class Login extends React.Component {
             password: '',
             usernameValid: false,
             passwordValid: false,
-            error: false
+            error: false,
         };
     }
 
