@@ -14,7 +14,6 @@ class Input extends React.Component {
     }
 
     onChange(value) {
-
         this.props.updateSelectState({
             playerTwo: value === null ? null : value.id,
             playerTwoValid: value !== null
@@ -39,7 +38,7 @@ class Input extends React.Component {
 
     render() {
         const { placeholder, title } = this.props.field;
-        const AsyncComponent = Select.AsyncCreatable;
+        const AsyncComponent = Select.Async;
 
         return (
             <div className="field">

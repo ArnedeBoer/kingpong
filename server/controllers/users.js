@@ -74,7 +74,7 @@ module.exports = {
             .findAll({
                 where: {
                     username: {
-                        [Op.eq]: req.params.username
+                        [Op.iLike]: req.params.username
                     }
                 },
                 order: [
