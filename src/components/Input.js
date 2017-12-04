@@ -38,7 +38,7 @@ class New extends React.Component {
     render() {
         const { name, title, type } = this.props;
         const nameLc = name.toLowerCase();
-        const tooltipText = nameLc === 'passwordConfirm' ? 'The passwords do not match.' : `The ${nameLc} must be at least 8 characters long`;
+        const tooltipText = nameLc === 'passwordconfirm' ? 'The passwords do not match.' : `The ${nameLc} must be at least 8 characters long`;
         const value = this.props.value;
 
         return (
