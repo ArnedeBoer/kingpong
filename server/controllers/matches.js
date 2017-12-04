@@ -19,7 +19,8 @@ module.exports = {
             .findAll({
                 order: [
                     ['id', 'DESC']
-                ]
+                ],
+                include: ['playerOneMatches', 'playerTwoMatches']
             })
             .then(matches => res.status(200).send(matches));
     },
@@ -31,6 +32,19 @@ module.exports = {
                         playerOne: req.body.id,
                         playerTwo: req.body.id
                     }
+                },
+                order: [
+                    ['id', 'DESC']
+                ],
+                include: ['playerOneMatches', 'playerTwoMatches']
+            })
+            .then(matches => res.status(200).send(matches));
+    },
+    listConfirmed(req, res) {
+        return Matches
+            .findAll({
+                where: {
+                    confirmed: true
                 },
                 order: [
                     ['id', 'DESC']
@@ -72,7 +86,14 @@ module.exports = {
     },
     confirm(req, res) {
         return Matches
-            .findById(req.body.id)
+            .findOne({
+                where: {
+                    id: {
+                        [Op.eq]: req.body.id
+                    }
+                },
+                include: ['playerOneMatches', 'playerTwoMatches']
+            })
             .then(match => {
                 match.update({
                     confirmed: true

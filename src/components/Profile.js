@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from './Input';
-import Match from './Match';
+import MyMatch from './MyMatch';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -79,20 +79,12 @@ class Profile extends React.Component {
         fetch("/api/user/" + sessionStorage.getItem("userID"), {
             method: "GET"
         })
-        .then(res => {
-            if(res.status === 200) {
-                return res.json();
-            } else {
-                window.location.replace('/');
-            }
-        })
-        .then(user => this.setState({
-            username: user.username
-        }))
+        .then(res => res.json())
+        .then(user => this.setState({ username: user.username }))
     }
 
     matchesLoad() {
-        fetch("/api/match/listmine/", {
+        fetch("/api/match/list/mine/", {
             method: "POST",
             body: JSON.stringify({id: sessionStorage.getItem('userID')}),
             headers: {
@@ -128,7 +120,11 @@ class Profile extends React.Component {
                     title="Password"
                     updateState={this.updateState}
                 />
-                <button className="save" disabled={formValid} onClick={this.save}>Save</button>
+                <button
+                    className="save"
+                    disabled={formValid}
+                    onClick={this.save}>Save
+                </button>
             </form>
         )
     }
@@ -160,7 +156,7 @@ class Profile extends React.Component {
                     </tr>
                     {
                         this.state.matches.map((match, index) => {
-                            return <Match
+                            return <MyMatch
                                 key={match.id}
                                 match={match}
                                 index={index}
