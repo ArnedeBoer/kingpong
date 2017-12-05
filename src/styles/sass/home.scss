@@ -1,4 +1,16 @@
-#home > * {
-    margin: auto;
-    width: 500px;
+#home {
+
+    > * {
+        margin: auto;
+        width: 500px;
+    }
+
+    span {
+        display: block;
+    }
+
+    h2 {
+        margin-top: 50px;
+    }
+
 }

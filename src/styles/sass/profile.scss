@@ -3,11 +3,11 @@
 }
 
 #profile {
-    h2, form, #info {
+    h2, form, #info, #edit-user {
         width: 240px;
     }
 
-    form, #info {
+    #edit-user, #info {
         margin-bottom: 50px;
     }
 

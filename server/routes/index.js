@@ -15,4 +15,5 @@ module.exports = app => {
     app.post('/api/match/list/mine/', matchesController.listMine);
     app.get('/api/match/list/confirmed/', matchesController.listConfirmed);
     app.post('/api/match/confirm/', matchesController.confirm);
+    app.get('/api/match/mvp/', matchesController.mvp);
 };

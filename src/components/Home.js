@@ -6,10 +6,22 @@ class Home extends React.Component {
         super();
 
         this.state = {
-            matches: []
+            matches: [],
+            mvp: {}
         };
 
+        this.getMvp();
         this.matchesLoad();
+    }
+
+    getMvp() {
+        fetch("/api/match/mvp/", {
+            method: "GET"
+        })
+        .then(res => res.json())
+        .then(mvp => {
+            this.setState({mvp});
+        });
     }
 
     matchesLoad() {
@@ -23,8 +35,14 @@ class Home extends React.Component {
     }
 
     render() {
+        const { name, score } = this.state.mvp;
+
         return (
             <div id="home">
+                <h2>Most matches won</h2>
+                <span>Name: {name}</span>
+                <span>Wins: {score}</span>
+
                 <h2>All matches</h2>
                 <table>
                     <tbody>

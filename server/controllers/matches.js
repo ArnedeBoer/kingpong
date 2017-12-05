@@ -101,5 +101,35 @@ module.exports = {
                 .then(updatedMatch => res.status(200).send(updatedMatch));
             })
             .catch(error => res.status(403).send(error));
+    },
+    mvp(req, res) {
+        return Matches.
+            findAll({
+                where: {
+                    confirmed: true
+                },
+                include: ['playerOneMatches', 'playerTwoMatches']
+            })
+            .then(matches => {
+                const winners = matches.map(match => {
+                    const { playerOneMatches, playerTwoMatches, scoreOne, scoreTwo } = match;
+
+                    return scoreOne > scoreTwo ? playerOneMatches.username : playerTwoMatches.username;
+                });
+                const winningPlayers = [...new Set(winners)];
+                const scores = winningPlayers.map(winningPlayer => {
+                    return {
+                        name: winningPlayer,
+                        score: winners.filter(winner => winner === winningPlayer).length
+                    };
+                });
+
+                const mvp = scores.reduce((x, y) => {
+                    return x.score === Math.max(x.score, y.score) ? x : y;
+                });
+
+                res.status(200).send(mvp);
+            })
+            .catch(error => res.status(400).send(error));
     }
 };

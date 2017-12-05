@@ -3,11 +3,6 @@ const User = require('../models').User;
 const Op = require('sequelize').Op;
 const requiredLength = 8;
 const checkStringLength = (input, len) => input.length === 0 || input.length >= len;
-// const checkNameUse = (input) => User.findOne({ where:{ username: {[Op.iLike]: input} } }).then(user => {
-//     return user ;
-// })
-// .then(res => res.json())
-// .then(res => res === null ? true : false);
 
 module.exports = {
     create(req, res) {
@@ -20,7 +15,6 @@ module.exports = {
             .catch(error => res.status(400).send(error));
     },
     login(req, res) {
-        // console.log(checkNameUse('shakespeare'));
         return User
             .findOne({
                 where:{
@@ -95,11 +89,11 @@ module.exports = {
                 }
             })
             .then(user => {
-                if (!user){
+                if (!user) {
                     return res.status(400).send({ message: 'You must be logged in' });
                 }
                 return user.update({
-                        username: checkStringLength(req.body.username, requiredLength) && checkNameUse(req.body.username) ? req.body.username : undefined,
+                        username: checkStringLength(req.body.username, requiredLength) ? req.body.username : undefined,
                         password: checkStringLength(req.body.password, requiredLength) ? bcrypt.hashSync(req.body.password, 9) : undefined
                     })
                     .then(editedUser => res.status(201).send(editedUser.dataValues))

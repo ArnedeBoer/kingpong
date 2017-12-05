@@ -72,6 +72,9 @@ class Profile extends React.Component {
             if(res.status === 201) {
                 this.setState({edit: false});
             }
+            if(res.status === 400) {
+                this.setState({error: true});
+            }
         });
     }
 
@@ -106,26 +109,29 @@ class Profile extends React.Component {
         const { username } = this.state;
 
         return (
-            <form id="login-form" onSubmit={(e) => this.handleSubmit(e)}>
-                <Input
-                    type="text"
-                    name="username"
-                    title="Username"
-                    value={username}
-                    updateState={this.updateState}
-                />
-                <Input
-                    type="password"
-                    name="password"
-                    title="Password"
-                    updateState={this.updateState}
-                />
-                <button
-                    className="save"
-                    disabled={formValid}
-                    onClick={this.save}>Save
-                </button>
-            </form>
+            <div id="edit-user">
+                <form id="edit-form" onSubmit={(e) => this.handleSubmit(e)}>
+                    <Input
+                        type="text"
+                        name="username"
+                        title="Username"
+                        value={username}
+                        updateState={this.updateState}
+                    />
+                    <Input
+                        type="password"
+                        name="password"
+                        title="Password"
+                        updateState={this.updateState}
+                    />
+                    <button
+                        className="save"
+                        disabled={formValid}
+                        onClick={this.save}>Save
+                    </button>
+                </form>
+                { this.state.error ? <div className="error">The username or password is not correct.</div> : null }
+            </div>
         )
     }
 
@@ -134,7 +140,7 @@ class Profile extends React.Component {
 
         return (
             <div id="info">
-                <span>Username: {username}</span>
+                <h2>{username}</h2>
                 <button className="edit" onClick={this.edit}>Edit</button>
             </div>
         )
