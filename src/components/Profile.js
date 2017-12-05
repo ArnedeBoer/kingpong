@@ -36,7 +36,7 @@ class Profile extends React.Component {
     updateMatch(id) {
         const matches = this.state.matches;
         const foundIndex = matches.findIndex(x => x.id === id);
-        
+
         fetch('/api/match/confirm/', {
             method: "POST",
             body: JSON.stringify({id}),
@@ -50,12 +50,12 @@ class Profile extends React.Component {
             matches[foundIndex].id = Math.random(); //read up on immutables
 
             this.setState({matches: matches});
-        })        
+        })
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        
+
         const fields = {
             username: this.state.username,
             password: this.state.password
@@ -141,7 +141,7 @@ class Profile extends React.Component {
         return (
             <div id="info">
                 <h2>{username}</h2>
-                <button className="edit" onClick={this.edit}>Edit</button>
+                <button className="edit" onClick={this.edit}>Edit Profile</button>
             </div>
         )
     }

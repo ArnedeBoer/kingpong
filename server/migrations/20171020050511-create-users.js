@@ -10,11 +10,17 @@ module.exports = {
             username: {
                 type: Sequelize.STRING,
                 unique: true,
-                allowNull: false
+                allowNull: false.
+                validation: {
+                    len: { args: 8 }
+                }
             },
             password: {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: false,
+                validation: {
+                    len: { args: 8 }
+                }
             }
         }, {
             timestamps: false
