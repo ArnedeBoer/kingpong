@@ -130,7 +130,7 @@ class Profile extends React.Component {
                         onClick={this.save}>Save
                     </button>
                 </form>
-                { this.state.error ? <div className="error">The username or password is not correct.</div> : null }
+                { this.state.error ? <div className="error">This username is taken.</div> : null }
             </div>
         )
     }
