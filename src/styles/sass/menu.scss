@@ -1,17 +1,19 @@
 #menu {
-    width: 70%;
+    width: 100%;
+    background-color: blue;
     display: block;
     margin: auto;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 
     ul {
         display: flex;
         justify-content: space-between;
         list-style: none;
+        align-items: center;
 
         li {
             padding: 30px;
-            
+
             a {
                 text-decoration: none;
                 padding: 30px;

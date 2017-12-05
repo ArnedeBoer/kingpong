@@ -99,7 +99,7 @@ module.exports = {
                     return res.status(400).send({ message: 'You must be logged in' });
                 }
                 return user.update({
-                        username: checkStringLength(req.body.username, requiredLength) && checkNameUse(req.body.username) ? req.body.username : undefined,
+                        username: checkStringLength(req.body.username, requiredLength) ? req.body.username : undefined,
                         password: checkStringLength(req.body.password, requiredLength) ? bcrypt.hashSync(req.body.password, 9) : undefined
                     })
                     .then(editedUser => res.status(201).send(editedUser.dataValues))
