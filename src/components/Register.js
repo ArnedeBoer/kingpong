@@ -45,11 +45,14 @@ class Register extends React.Component {
         })
         .then(res => {
             if(res.status === 201) {
-                sessionStorage.setItem("userID", res.Id);
-                window.location.replace('/profile');
+                return res.json()
             } else if (res.status === 400){
                 this.setState({error: true});
             }
+        })
+        .then(res => {
+            sessionStorage.setItem("userID", res.id);
+            window.location.replace('/profile');
         });
     };
 
