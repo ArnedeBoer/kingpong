@@ -1,18 +1,26 @@
 const Matches = require('../models').Matches;
-const Users = require('../models').Users;
+const Sessions = require('../models/').Sessions;
 const Op = require('sequelize').Op;
 
 module.exports = {
     create(req, res) {
-        return Matches
-            .create({
-                playerOne: req.body.playerOne,
-                playerTwo: req.body.playerTwo,
-                scoreOne: req.body.scoreOne,
-                scoreTwo: req.body.scoreTwo
+        return Sessions
+            .findOne({
+                where: {
+                    hash: req.body.playerOne
+                }
             })
-            .then(match => res.status(201).send(match))
-            .catch(error => res.status(400).send(error));
+            .then(session => {
+                return Matches
+                    .create({
+                        playerOne: session.dataValues.userid,
+                        playerTwo: req.body.playerTwo,
+                        scoreOne: req.body.scoreOne,
+                        scoreTwo: req.body.scoreTwo
+                    })
+                    .then(match => res.status(201).send(match))
+                    .catch(error => res.status(400).send(error));
+            });
     },
     list(req, res) {
         return Matches
@@ -25,20 +33,27 @@ module.exports = {
             .then(matches => res.status(200).send(matches));
     },
     listMine(req, res) {
-        return Matches
-            .findAll({
+        return Sessions
+            .findOne({
                 where: {
-                    [Op.or]: {
-                        playerOne: req.body.id,
-                        playerTwo: req.body.id
-                    }
-                },
-                order: [
-                    ['id', 'DESC']
-                ],
-                include: ['playerOneMatches', 'playerTwoMatches']
-            })
-            .then(matches => res.status(200).send(matches));
+                    hash: req.body.hash
+                }
+            }).then(session => {
+                return Matches
+                    .findAll({
+                        where: {
+                            [Op.or]: {
+                                playerOne: session.userid,
+                                playerTwo: session.userid
+                            }
+                        },
+                        order: [
+                            ['id', 'DESC']
+                        ],
+                        include: ['playerOneMatches', 'playerTwoMatches']
+                    })
+                    .then(matches => res.status(200).send(matches));
+            });
     },
     listConfirmed(req, res) {
         return Matches
@@ -63,44 +78,35 @@ module.exports = {
             .then(() => res.status(200).send({ message: 'Success' }))
             .catch(error => res.status(400).send(error));
     },
-    editScore(req, res) {
-        return Matches
-            .findOne({
-                where: {
-                    playerOne: req.session.user.id,
-                    id: req.session.user.id // Unsure where the match's id will be stored
-                }
-            })
-            .then(match => {
-                if (match) {
-                    return match.update({
-                            scoreOne: req.body.scoreOne,
-                            scoreTwo: req.body.scoreTwo
-                        })
-                        .then(updatedMatch => res.status(201).send(updatedMatch));
-                }
-
-                return res.status(403).send({ message: 'User not permitted' });
-            })
-            .catch(error => res.status(400).send(error));
-    },
     confirm(req, res) {
-        return Matches
+        return Sessions
             .findOne({
                 where: {
-                    id: {
-                        [Op.eq]: req.body.id
-                    }
-                },
-                include: ['playerOneMatches', 'playerTwoMatches']
-            })
-            .then(match => {
-                match.update({
-                    confirmed: true
-                })
-                .then(updatedMatch => res.status(200).send(updatedMatch));
-            })
-            .catch(error => res.status(403).send(error));
+                    hash: req.body.hash
+                }
+            }).then(session => {
+                return Matches
+                    .findOne({
+                        where: {
+                            [Op.and]: {
+                                id: {
+                                    [Op.eq]: req.body.id
+                                },
+                                playerTwo: {
+                                    [Op.eq]: session.userid
+                                }
+                            }
+                        },
+                        include: ['playerOneMatches', 'playerTwoMatches']
+                    })
+                    .then(match => {
+                        match.update({
+                            confirmed: true
+                        })
+                        .then(updatedMatch => res.status(200).send(updatedMatch));
+                    })
+                    .catch(error => res.status(403).send(error));
+            });
     },
     mvp(req, res) {
         return Matches.

@@ -10,7 +10,7 @@ class New extends React.Component {
         this.updateSelectState = this.updateSelectState.bind(this);
 
         this.state = {
-            playerOne: sessionStorage.getItem('userID'),
+            playerOne: localStorage.getItem('hash'),
             playerTwo: null,
             scoreOne: 0,
             scoreTwo: 0,

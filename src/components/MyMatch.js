@@ -23,7 +23,7 @@ class MyMatch extends React.Component {
 
     render() {
         const { playerOne, playerTwo, scoreOne, scoreTwo, confirmed } = this.state;
-        const mineToConfirm = playerTwo.id === Number(sessionStorage.getItem('userID'));
+        const mineToConfirm = playerTwo.id === Number(this.props.userid);
         const getConfirmContent = () => {
             let toReturn;
 

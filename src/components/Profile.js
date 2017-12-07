@@ -14,6 +14,7 @@ class Profile extends React.Component {
         this.state = {
             username: '',
             password: '',
+            userid: null,
             usernameValid: true,
             passwordValid: false,
             edit: false,
@@ -39,7 +40,7 @@ class Profile extends React.Component {
 
         fetch('/api/match/confirm/', {
             method: "POST",
-            body: JSON.stringify({id}),
+            body: JSON.stringify({id, hash: localStorage.getItem('hash')}),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -58,10 +59,11 @@ class Profile extends React.Component {
 
         const fields = {
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            hash: localStorage.getItem('hash')
         }
 
-        fetch(`/api/user/edit/${sessionStorage.getItem('userID')}`, {
+        fetch(`/api/user/edit/`, {
             method: "POST",
             body: JSON.stringify(fields),
             headers: {
@@ -79,17 +81,23 @@ class Profile extends React.Component {
     }
 
     profileLoad() {
-        fetch("/api/user/" + sessionStorage.getItem("userID"), {
-            method: "GET"
+        const fields = { hash: localStorage.getItem('hash')};
+
+        fetch("/api/user/find", {
+            method: "POST",
+            body: JSON.stringify(fields),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
         .then(res => res.json())
-        .then(user => this.setState({ username: user.username }))
+        .then(user => this.setState({ username: user.username, userid: user.id }))
     }
 
     matchesLoad() {
         fetch("/api/match/list/mine/", {
             method: "POST",
-            body: JSON.stringify({id: sessionStorage.getItem('userID')}),
+            body: JSON.stringify({hash: localStorage.getItem('hash')}),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -167,6 +175,7 @@ class Profile extends React.Component {
                                 match={match}
                                 index={index}
                                 updateMatch={this.updateMatch}
+                                userid={this.state.userid}
                             />
                         })
                     }

@@ -45,10 +45,9 @@ class Login extends React.Component {
                 this.setState({error: true});
             }
         })
-        .then(res => {
-            sessionStorage.setItem('userID', res.id);
+        .then(results => {
+            localStorage.setItem('hash', results.hash);
             window.location.replace('/');
-
         })
     };
 
