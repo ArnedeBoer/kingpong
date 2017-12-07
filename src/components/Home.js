@@ -39,9 +39,7 @@ class Home extends React.Component {
 
         return (
             <div id="home">
-                <h2>Most matches won</h2>
-                <span>Name: {name}</span>
-                <span>Wins: {score}</span>
+                <h2>Most matches won: {name} (Wins: {score})</h2>
 
                 <h2>All matches</h2>
                 <table>

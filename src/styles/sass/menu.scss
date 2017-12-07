@@ -1,9 +1,10 @@
 #menu {
     width: 100%;
-    background-color: blue;
+    background-color: tomato;
     display: block;
     margin: auto;
     font-size: 1.3rem;
+    box-shadow: 5px 5px 10px grey;
 
     ul {
         display: flex;
