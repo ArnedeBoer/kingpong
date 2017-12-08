@@ -1,5 +1,6 @@
 import React from 'react';
 import Match from './Match';
+import Ads from './Ads';
 
 class Home extends React.Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class Home extends React.Component {
 
         return (
             <div id="home">
+                <Ads />
                 <h2>Most matches won: {name} (Wins: {score})</h2>
 
                 <h2>All matches</h2>

@@ -3,13 +3,15 @@
     padding: 0;
 }
 
-$font-stack: "Arial", sans-serif
+$font-stack: "Arial", sans-serif;
+$primary-colour: tomato;
 
 #main {
     font-family: $font-stack;
 
 }
 
+@import './ads';
 @import './register';
 @import './menu';
 @import './tooltip';
