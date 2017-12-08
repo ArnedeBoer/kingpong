@@ -2,7 +2,7 @@
     width: 100%;
     background-color: $primary-colour;
     display: block;
-    margin: auto;
+    margin:auto;
     font-size: 1.3rem;
     box-shadow: 5px 5px 10px grey;
 
@@ -13,11 +13,40 @@
         align-items: center;
 
         li {
-            padding: 30px;
+            padding: 2%;
 
             a {
                 text-decoration: none;
-                padding: 30px;
+                padding: 10%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #menu {
+        width: 100%;
+        background-color: $primary-colour;
+        display: block;
+        margin: auto;
+        font-size: 1rem;
+        padding: 0% 36.5% 1% 0%;
+        align-content: center;
+        text-align: center;
+
+        ul {
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+            align-items: center;
+
+            li {
+                padding: 10%;
+
+                a {
+                    text-decoration: none;
+                    padding: 15%;
+                }
             }
         }
     }

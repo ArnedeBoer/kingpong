@@ -8,8 +8,12 @@ $primary-colour: tomato;
 
 #main {
     font-family: $font-stack;
-
+    margin:auto;
 }
+//
+// @media only screen and (max-width:500px) {
+//     width: 100%;
+// }
 
 @import './ads';
 @import './register';
