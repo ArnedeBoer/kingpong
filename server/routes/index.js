@@ -5,7 +5,7 @@ const sessionsController = require('../controllers').sessions;
 module.exports = app => {
     app.get('/api/user/all', usersController.list);
     app.post('/api/user/find/', usersController.findByUsername);
-    app.get('/api/user/filter/', usersController.filterByUsername);
+    app.get('/api/user/filter/:username', usersController.filterByUsername);
     app.post('/api/user/edit/', usersController.edit);
     app.post('/api/user/login', usersController.login);
     app.post('/api/user/create', usersController.create);
